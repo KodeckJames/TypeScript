@@ -34,3 +34,53 @@ logMsg(add(2, 3))
 let subtract = function (c: number, d: number): number{
     return c - d
 }
+
+// Creating functions with type:
+// type mathFunction = (a: number, b: number) => number
+interface mathFunction{
+    (a: number, b: number): number
+}
+ 
+let multiply: mathFunction = (c, d) => {
+    return c * d
+}
+
+logMsg(multiply(2, 6))
+
+// Optional params
+const addAll = (a: number, b: number, c?: number): number => {
+    if (typeof c !== "undefined") {
+        return a + b + c
+    }
+    return a + b  
+}
+
+// Default param value:
+const sumAll = (a: number, b: number, c: number = 2): number => {
+    
+    return a + b + c 
+}
+
+logMsg(addAll(2,3,2))
+// You can make a param optional by putting a question mark after it, ie before the colon
+// Default values don't work with aliases type and interface...
+
+// Rest params
+const total = (...nums: number[]): number => {
+    return nums.reduce((prev, curr)=> prev + curr)
+}
+logMsg(total(1, 2,3,4)) 
+
+
+// Functions that explicitly throw errors, or have endless loops are given : never 
+const createError = (errMsg: string): never => {
+    throw new Error(errMsg);    
+}
+
+const infinite = () => {
+    let i: number = 1
+    while (true) {
+        i++
+        if (i > 100) break
+    }
+}
