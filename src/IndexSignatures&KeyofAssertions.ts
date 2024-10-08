@@ -10,20 +10,22 @@
 // key: string means the object can have any number of properties with keys that are strings.
 // number means that the values corresponding to those keys must be numbers.
 
-// interface TransactionObj {
-//     Pizza: number
-//     Cookie: number
-//     Job: number
-// }
 
-interface TransactionObj{
-  readonly [index: string]: number
+// interface TransactionObj{
+//   readonly [index: string]: number
+// }
+interface TransactionObj {
+    readonly [index: string]: number
+    Pizza: number
+    Cookie: number
+    Job: number
 }
 
 const todaysTransactions: TransactionObj = {
     Pizza: 8,
     Cookie: 7,
-    Job: 9
+    Job: 9,
+    JJ: 18
 }
 console.log(todaysTransactions.Pizza);
 console.log(todaysTransactions['Cookie']);
@@ -40,3 +42,56 @@ const todaysNet = (transactions: TransactionObj): number => {
 }
 console.log(todaysNet(todaysTransactions));
 // todaysTransactions.Pizza = 40
+
+///////////////////////////////////////////////
+
+interface Student{
+    [index: string]: string | number | number[] | undefined
+    name: string
+    GPA: number
+    classes?: number[]
+}
+
+const student: Student = {
+    name: "JJ",
+    GPA: 90,
+    classes: [100, 99],
+    other: 'LowKey'
+}
+// console.log(student.test);
+
+for (const key in student) {
+    console.log(`${key}: ${student[key]}`);
+}
+
+// HOW TO ITERATE OVER AN OBJECT THAT DOESN'T HAVE AN INDEX SIGNATURE PROVIDED:
+
+for (const key in student) {
+    console.log(`${key} ${student[key as keyof Student]}`);    
+}
+
+const logStudentKey = (student: Student, key: keyof Student): void => {
+    console.log(`Student ${key} : ${student[key]}`);
+}
+
+logStudentKey(student, 'name')
+
+///////////////////////////////////////////////
+// interface Incomes{
+//     [key: String]: number
+// }
+
+// The below code is just an alternative of index signatures
+type Streams = 'salary' | 'bonus' | 'sidehustle'
+type Incomes = Record<Streams, number | string>
+// This means that salary, bonus and sidehustle keys cantake in number or string data types
+const monthlyIncomes: Incomes = {
+    salary: 500000,
+    bonus: 2000,
+    sidehustle: 'coding'
+}
+
+for (const revenue in monthlyIncomes) {
+    console.log(monthlyIncomes[revenue as keyof Incomes]);
+    
+}
